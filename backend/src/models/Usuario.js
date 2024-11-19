@@ -44,6 +44,9 @@ const Usuario = sequelize.define(
                 notEmpty: true
             }
         },
+        refresh_token: { type: DataTypes.TEXT },
+        reset_token: { type: DataTypes.STRING }, // Token para recuperación de contraseña
+        reset_token_expiration: { type: DataTypes.DATE }, // Expiración del token de recuperación
         fechaNacimiento: { 
             type: DataTypes.DATE 
         },

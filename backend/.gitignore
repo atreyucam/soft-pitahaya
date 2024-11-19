@@ -3,6 +3,7 @@ node_modules/
 
 # Entorno de producción
 .env
+.env.test
 
 # Logs
 logs/

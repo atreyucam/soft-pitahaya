@@ -8,7 +8,10 @@ const initializeRoles = async () => {
     ];
 
     for (const roleData of roles) {
-        await Rol.findOrCreate({ where: { nombre: roleData.nombre }, defaults: roleData });
+        const [role, created] = await Rol.findOrCreate({
+            where: { nombre: roleData.nombre },
+            defaults: roleData
+        });
     }
 };
 

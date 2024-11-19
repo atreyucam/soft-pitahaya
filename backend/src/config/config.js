@@ -1,8 +1,11 @@
-require("dotenv").config();
 const { Sequelize } = require("sequelize");
+require("dotenv").config();
+
+console.log("DB_NAME:", process.env.DB_NAME);
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
+    
     process.env.DB_USER,
     process.env.DB_PASS,
     {
@@ -11,6 +14,7 @@ const sequelize = new Sequelize(
         dialect: "postgres",
         logging: false, // Desactivar logging para producción
     }
+    
 );
 
 

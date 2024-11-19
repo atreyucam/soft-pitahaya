@@ -12,6 +12,18 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.refreshToken = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) return res.status(401).json({ error: 'Refresh token requerido' });
+
+        const tokens = await authService.refreshToken(refreshToken);
+        res.status(200).json(tokens);
+    } catch (error) {
+        res.status(403).json({ error: error.message });
+    }
+};
+
 exports.getPerfil = (req, res) => {
     res.json({
         usuario_id: req.user.usuario_id,
@@ -36,6 +48,32 @@ exports.registerAdmin = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+// Endpoint para Solicitar el Token de Recuperación
+exports.requestPasswordReset = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const resetToken = await authService.generateResetToken(email);
+        res.status(200).json({ message: 'Token de recuperación generado', resetToken }); // En un entorno real, envía el token por correo electrónico
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+// Endpoint para Restablecer la Contraseña
+exports.resetPassword = async (req, res) => {
+    try {
+        const { resetToken, newPassword } = req.body;
+        await authService.resetPassword(resetToken, newPassword);
+        res.status(200).json({ message: 'Contraseña actualizada con éxito' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+
+// -----------------------------------------------------------------------------------
 
 // Servicios de usuarios
 exports.getAllUsuarios = async (req, res) => {

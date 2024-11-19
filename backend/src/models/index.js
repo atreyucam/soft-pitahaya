@@ -1,12 +1,95 @@
+const PagoTrabajador = require('./PagoTrabajador');
+const CostoGasto = require('./CostoGasto');
 const Usuario = require('./Usuario');
 const Trabajador = require('./Trabajador');
 const Rol = require('./Rol');
+const Lote = require('./Lote');
+const Actividad = require('./Actividad');
+const TipoActividad = require("./TipoActividad");
+const Inventario = require('./Inventario');
+const Insumo = require('./Insumo');
+const UsoInsumo = require('./UsoInsumo');
+const Comprador = require('./Comprador');
+const Venta = require('./Venta');
+const DetalleVenta = require('./DetalleVenta');
+const Mensaje = require('./Mensaje');
+const Notificacion = require('./Notificacion');
+const RegistroBPA = require('./RegistroBPA');
+const Cosecha = require('./Cosecha');
+const Solicitud = require('./Solicitud');
 
-// Configuración de relaciones
+
 Rol.hasMany(Usuario, { foreignKey: 'rol_id' });
 Usuario.belongsTo(Rol, { foreignKey: 'rol_id' });
 
 Usuario.hasOne(Trabajador, { foreignKey: 'usuario_id' });
 Trabajador.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
-module.exports = { Usuario, Trabajador, Rol};
+Lote.hasMany(Actividad, { foreignKey: 'lote_id' });
+Actividad.belongsTo(Lote, { foreignKey: 'lote_id' });
+
+TipoActividad.hasMany(Actividad, { foreignKey: "tipo_id" });
+Actividad.belongsTo(TipoActividad, { foreignKey: "tipo_id" });
+
+
+Inventario.hasOne(Insumo, { foreignKey: 'item_id' });
+Insumo.belongsTo(Inventario, { foreignKey: 'item_id' });
+
+Insumo.hasMany(UsoInsumo, { foreignKey: 'insumo_id' });
+UsoInsumo.belongsTo(Insumo, { foreignKey: 'insumo_id' });
+
+Actividad.hasMany(UsoInsumo, { foreignKey: 'actividad_id' });
+UsoInsumo.belongsTo(Actividad, { foreignKey: 'actividad_id' });
+
+Actividad.hasMany(CostoGasto, { foreignKey: 'actividad_id' });
+CostoGasto.belongsTo(Actividad, { foreignKey: 'actividad_id' });
+
+CostoGasto.hasOne(PagoTrabajador, { foreignKey: 'gasto_id' });
+PagoTrabajador.belongsTo(CostoGasto, { foreignKey: 'gasto_id' });
+
+Trabajador.hasMany(PagoTrabajador, { foreignKey: 'trabajador_id' });
+PagoTrabajador.belongsTo(Trabajador, { foreignKey: 'trabajador_id' });
+
+Comprador.hasMany(Venta, { foreignKey: 'comprador_id' });
+Venta.belongsTo(Comprador, { foreignKey: 'comprador_id' });
+
+Venta.hasMany(DetalleVenta, { foreignKey: 'venta_id' });
+DetalleVenta.belongsTo(Venta, { foreignKey: 'venta_id' });
+
+Lote.hasMany(DetalleVenta, { foreignKey: 'lote_id' });
+DetalleVenta.belongsTo(Lote, { foreignKey: 'lote_id' });
+
+Usuario.hasMany(Mensaje, { foreignKey: 'emisor_id'});
+Usuario.hasMany(Mensaje, { foreignKey: 'receptor_id'});
+
+Usuario.hasMany(Notificacion, { foreignKey: 'usuario_id' });
+Notificacion.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+
+Usuario.hasMany(RegistroBPA, { foreignKey: 'usuario_id' });
+RegistroBPA.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+
+Lote.hasMany(Cosecha, { foreignKey: 'lote_id' });
+Cosecha.belongsTo(Lote, { foreignKey: 'lote_id' });
+
+// Relación con Trabajador
+Trabajador.hasMany(Cosecha, { foreignKey: 'trabajador_id' });
+Cosecha.belongsTo(Trabajador, { foreignKey: 'trabajador_id' });
+
+// Relación con Actividad
+Actividad.hasOne(Cosecha, { foreignKey: 'actividad_id' });
+Cosecha.belongsTo(Actividad, { foreignKey: 'actividad_id' });
+
+// Relación con Usuario
+Usuario.hasMany(Solicitud, { foreignKey: 'usuario_id' });
+Solicitud.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+
+// Relación con Inventario
+Inventario.hasMany(Solicitud, { foreignKey: 'item_id' });
+Solicitud.belongsTo(Inventario, { foreignKey: 'item_id' });
+
+
+
+module.exports = { Usuario, Trabajador, Rol, Lote, Actividad, TipoActividad,
+    Inventario, Insumo, UsoInsumo, CostoGasto, PagoTrabajador, Comprador, Venta, DetalleVenta,
+    Mensaje, Notificacion, RegistroBPA, Cosecha, Solicitud
+ };
