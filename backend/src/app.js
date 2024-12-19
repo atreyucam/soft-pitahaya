@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const sequelize = require("./config/config");
 const routes = require("./routes");
 const initializeRoles = require('./utils/initializeRoles');
@@ -14,6 +15,16 @@ const PORT = process.env.PORT || 3005;
 
 // Middlewares
 app.use(express.json());
+app.use(cors({
+    origin: "http://localhost:5174", // Cambia a la URL de tu frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
+// Middleware para manejar errores
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "Ocurrió un error en el servidor." });
+});
 app.use("/api", routes); // Todas las rutas del API empezarán con /api
 // Montar Swagger UI en la ruta /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
