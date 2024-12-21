@@ -19,7 +19,10 @@ exports.deleteUsuario = async (id) => {
 };
 
 exports.createUsuario = async (data) => {
-    const { rol_id, nombre, apellido, email, password, fechaNacimiento } = data;
+    const { rol_id, nombre, apellido, email, password, 
+        telefono, direccion, habilidades, sueldo, fechaNacimiento,
+        fecha_contratacion, campo_experto } = data;
+
 
     // Verificar que el rol existe
     const rol = await Rol.findByPk(rol_id);
@@ -59,6 +62,12 @@ exports.createUsuario = async (data) => {
         apellido,
         email,
         password: hashedPassword,
-        fechaNacimiento
+        telefono,
+        direccion,
+        fechaNacimiento,
+        habilidades,
+        sueldo,
+        fecha_contratacion,
+        campo_experto,
     });
 };

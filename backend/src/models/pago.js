@@ -1,30 +1,22 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/config");
-const Trabajador = require("./Trabajador");
-const CostoGasto = require("./CostoGasto");
+const Usuario = require("./Usuario");
 
-const PagoTrabajador = sequelize.define(
-    "PagoTrabajador",
+
+const Pago = sequelize.define(
+    "Pago",
     {
         pago_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        gasto_id: {
+        usuario_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: CostoGasto,
-                key: "gasto_id",
-            },
-        },
-        trabajador_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Trabajador,
-                key: "trabajador_id",
+                model: Usuario,
+                key: "usuario_id",
             },
         },
         fecha_pago: {
@@ -51,15 +43,11 @@ const PagoTrabajador = sequelize.define(
         timestamps: true,
         createdAt: "fecha_creacion",
         updatedAt: "fecha_modificacion",
-        tableName: "pagos_trabajadores",
+        tableName: "pagos",
     }
 );
 
-// Relación con Trabajador y CostoGasto
-CostoGasto.hasOne(PagoTrabajador, { foreignKey: "gasto_id" });
-PagoTrabajador.belongsTo(CostoGasto, { foreignKey: "gasto_id" });
+Usuario.hasMany(Pago, { foreignKey: "usuario_id" });
+Pago.belongsTo(Usuario, { foreignKey: "usuario_id" });
 
-Trabajador.hasMany(PagoTrabajador, { foreignKey: "trabajador_id" });
-PagoTrabajador.belongsTo(Trabajador, { foreignKey: "trabajador_id" });
-
-module.exports = PagoTrabajador;
+module.exports = Pago;

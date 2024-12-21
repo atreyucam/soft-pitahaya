@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const usuarioRoutes = require('./usuarioRoutes');
-const trabajadorRoutes = require('./trabajadorRoutes');
 const loteRoutes = require('./loteRoutes');
 const tipoActividadRoutes = require("./tipoActividadRoutes");
 const actividadRoutes = require('./actividadRoutes');
@@ -10,7 +9,7 @@ const inventarioRoutes = require('./inventarioRoutes');
 const insumoRoutes = require('./insumoRoutes');
 const usoInsumoRoutes = require('./usoInsumoRoutes');
 const costoGastoRoutes = require('./costoGastoRoutes');
-const pagoTrabajadorRoutes = require('./pagoTrabajadorRoutes');
+const pagoRoutes = require('./pagoRoutes');
 const compradorRoutes = require('./compradorRoutes');
 const ventaRoutes = require('./ventaRoutes');
 const detalleVentaRoutes = require('./detalleVentaRoutes');
@@ -27,7 +26,6 @@ router.get('/', (req, res) => {
 
 // Asociar rutas
 router.use('/usuarios', usuarioRoutes);
-router.use('/trabajadores', trabajadorRoutes);
 router.use('/lotes', loteRoutes);
 router.use("/tipo-actividades", tipoActividadRoutes);
 router.use('/actividades', actividadRoutes);
@@ -35,7 +33,7 @@ router.use('/inventario', inventarioRoutes);
 router.use('/insumos', insumoRoutes);
 router.use('/uso-insumos', usoInsumoRoutes);
 router.use('/costos-gastos', costoGastoRoutes);
-router.use('/pagos-trabajadores', pagoTrabajadorRoutes);
+router.use('/pagos', pagoRoutes);
 router.use('/compradores', compradorRoutes);
 router.use('/ventas', ventaRoutes);
 router.use('/detalles-venta', detalleVentaRoutes);

@@ -44,6 +44,27 @@ const Usuario = sequelize.define(
                 notEmpty: true
             }
         },
+        telefono: {
+            type: DataTypes.STRING(15),
+        },
+        direccion: {
+            type: DataTypes.TEXT,
+        },
+        fechaNacimiento: { 
+            type: DataTypes.DATE 
+        },
+        habilidades: { 
+            type: DataTypes.TEXT,
+        },
+        sueldo: {
+            type: DataTypes.DECIMAL(10, 2),
+        },
+        fecha_contratacion: {
+            type: DataTypes.DATE,
+        },
+        campo_experto: {
+            type: DataTypes.TEXT,
+        },
         refresh_token: { type: DataTypes.TEXT },
         reset_token: { type: DataTypes.STRING }, // Token para recuperación de contraseña
         reset_token_expiration: { type: DataTypes.DATE }, // Expiración del token de recuperación

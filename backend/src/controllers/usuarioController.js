@@ -87,12 +87,8 @@ exports.getAllUsuarios = async (req, res) => {
 
 exports.getUsuarioById = async (req, res) => {
     try {
-        const { usuario_id, rol } = req.user;
+        
         const userId = parseInt(req.params.id);
-
-        if (rol === 'Trabajador' && userId !== usuario_id) {
-            return res.status(403).json({ error: 'Acceso denegado: solo puedes ver tu propio perfil' });
-        }
 
         const usuario = await usuarioService.getUsuarioById(userId);
         if (!usuario) {
@@ -139,3 +135,5 @@ exports.deleteUsuario = async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el usuario' });
     }
 };
+
+

@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/config");
 const Lote = require("./Lote");
-const Trabajador = require("./Trabajador");
 const Actividad = require("./Actividad");
+const Usuario = require("./Usuario");
 
 const Cosecha = sequelize.define(
     "Cosecha",
@@ -50,11 +50,11 @@ const Cosecha = sequelize.define(
         destino: {
             type: DataTypes.STRING(100),
         },
-        trabajador_id: {
+        usuario_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: Trabajador,
-                key: "trabajador_id",
+                model: Usuario,
+                key: "usuario_id",
             },
             allowNull: false,
         },
@@ -81,8 +81,8 @@ const Cosecha = sequelize.define(
 Lote.hasMany(Cosecha, { foreignKey: "lote_id" });
 Cosecha.belongsTo(Lote, { foreignKey: "lote_id" });
 
-Trabajador.hasMany(Cosecha, { foreignKey: "trabajador_id" });
-Cosecha.belongsTo(Trabajador, { foreignKey: "trabajador_id" });
+Usuario.hasMany(Cosecha, { foreignKey: "Usuario_id" });
+Cosecha.belongsTo(Usuario, { foreignKey: "Usuario_id" });
 
 Actividad.hasOne(Cosecha, { foreignKey: "actividad_id" });
 Cosecha.belongsTo(Actividad, { foreignKey: "actividad_id" });

@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen }) => {
   const [openSections, setOpenSections] = useState({});
 
   const toggleSection = (section) => {
@@ -20,7 +20,7 @@ const Sidebar = () => {
       title: "DASHBOARD",
       items: [
         { to: "/home", label: "Home", icon: <FaShoppingCart /> },
-        { to: "/trabajadores", label: "Trabajadores", icon: <FaProjectDiagram /> },
+        { to: "/usuarios", label: "usuarios", icon: <FaProjectDiagram /> },
         {
           label: "Tareas Agronómicas",
           icon: <FaProjectDiagram />,
@@ -40,9 +40,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="bg-white w-72 h-screen shadow-lg fixed top-0 left-0 flex flex-col">
+    <aside
+      className={`bg-white shadow-lg h-full transition-all duration-300 ${
+        isOpen ? "w-72" : "w-0 overflow-hidden"
+      }`}
+    >
       {/* Header */}
-      <div className="p-4 flex items-center space-x-3 border-b">
+      <div className={`p-4 flex items-center space-x-3 border-b ${!isOpen && "hidden"}`}>
         <div className="bg-blue-500 text-white rounded-full p-2">
           <FaRocket size={24} />
         </div>
@@ -50,7 +54,7 @@ const Sidebar = () => {
       </div>
 
       {/* Sections */}
-      <div className="flex-grow overflow-y-auto p-4">
+      <div className={`flex-grow overflow-y-auto p-4 ${!isOpen && "hidden"}`}>
         {sections.map((section, idx) => (
           <div key={idx} className="mb-6">
             {/* Section Title */}

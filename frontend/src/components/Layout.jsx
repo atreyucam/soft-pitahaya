@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import DashboardNavbar from "./DashboardNavbar";
 
 const Layout = ({ children }) => {
-  return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar />
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-      {/* Contenido Principal */}
-      <div className="flex-1 ml-72">
-        {/* Navbar */}
-        <DashboardNavbar />
-        {/* Contenido */}
-        <div className="p-6">{children}</div>
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar isOpen={isSidebarOpen} />
+      <div className="flex-1 flex flex-col">
+        <DashboardNavbar toggleSidebar={toggleSidebar} />
+        <main className="flex-1 bg-gray-100 p-6">{children}</main>
       </div>
     </div>
   );

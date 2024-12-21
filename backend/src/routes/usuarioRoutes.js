@@ -17,11 +17,13 @@ router.post('/reset-password', usuarioController.resetPassword);
 // Rutas protegidas
 router.get('/perfil', authMiddleware, usuarioController.getPerfil); 
 
-// Rutas de usuarios con restricciones específicas
-router.post('/nuevoUsuario', authMiddleware, roleMiddleware(['crear_usuario']), usuarioController.createUsuario);
-router.delete('/usuario/:id', authMiddleware, roleMiddleware(['eliminar_usuario']), usuarioController.deleteUsuario);
-router.get('/listarUsuarios', authMiddleware, roleMiddleware(['ver_usuario']), usuarioController.getAllUsuarios);
-router.put('/usuario/:id', authMiddleware, roleMiddleware(['editar_usuario']), usuarioController.updateUsuario);
+
+// * funcionando
+router.post('/crear', usuarioController.createUsuario); //Crea un usuario
+router.get('/listarUsuarios', usuarioController.getAllUsuarios); //Lista a todos los usuarios
+router.get('/:id', usuarioController.getUsuarioById); //consulta por usuario
+router.put('/usuario/:id', usuarioController.updateUsuario);
+router.delete('/:id', usuarioController.deleteUsuario); //Para eliminar usuarios
 
 // Todos los usuarios autenticados pueden ver su propia información
 router.get('/usuario/:id', authMiddleware, usuarioController.getUsuarioById);

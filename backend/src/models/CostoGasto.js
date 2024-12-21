@@ -15,7 +15,13 @@ const CostoGasto = sequelize.define(
             allowNull: false,
         },
         categoria: {
-            type: DataTypes.ENUM("Insumos","herramientas","Máquinas", "Mano de Obra", "Mantenimiento", "Transporte", "Otros"),
+            type: DataTypes.ENUM("Insumos",
+                "herramientas",
+                "Máquinas", 
+                "Mano de Obra", 
+                "Mantenimiento", 
+                "Transporte", 
+                "Otros"),
             allowNull: false,
         },
         tipo: {
@@ -29,13 +35,7 @@ const CostoGasto = sequelize.define(
         descripcion: {
             type: DataTypes.TEXT,
         },
-        actividad_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: Actividad,
-                key: "actividad_id",
-            },
-        },
+        
     },
     {
         timestamps: true,
@@ -45,8 +45,5 @@ const CostoGasto = sequelize.define(
     }
 );
 
-// Relación con Actividad
-Actividad.hasMany(CostoGasto, { foreignKey: "actividad_id" });
-CostoGasto.belongsTo(Actividad, { foreignKey: "actividad_id" });
 
 module.exports = CostoGasto;

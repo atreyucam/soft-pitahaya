@@ -1,12 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { NotificationProvider } from "./components/Notification";
+
 import Layout from "./components/Layout";
 import AuthProvider from "./context/AuthContext";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Trabajadores from "./pages/Trabajadores";
-import AddTrabajador from "./pages/AddTrabajador";
-import TareasAgronomicas from "./pages/TareasAgronomicas";
+import Usuarios from "./pages/usuarios/Usuarios";
+import AddUsuarios from "./pages/usuarios/AddUsuario";
+import DetalleUsuario from "./pages/usuarios/DetalleUsuario";
+import TareasAgronomicas from "./pages/tareasAgronomicas/TareasAgronomicas";
 import Opcion3 from "./pages/Opcion3";
 import Opcion4 from "./pages/Opcion4";
 import PrivateRoute from "./components/PrivateRoute"; // Nuevo para rutas protegidas
@@ -16,6 +19,7 @@ import PrivateRoute from "./components/PrivateRoute"; // Nuevo para rutas proteg
 const App = () => {
   return (
     <AuthProvider>
+      <NotificationProvider>
       <Router>
         <Routes>
           {/* Ruta para Login */}
@@ -29,8 +33,10 @@ const App = () => {
                 <Layout>
                   <Routes>
                   <Route path="/home" element={<Home />} />
-                  <Route path="/trabajadores" element={<Trabajadores />} />
-                  <Route path="/add-trabajador" element={<AddTrabajador />} />
+                  <Route path="/usuarios" element={<Usuarios />} />
+                  <Route path="/add-usuario" element={<AddUsuarios />} />
+                  <Route path="/usuarios/:id" element={<DetalleUsuario />} />
+
                   <Route path="/tareas-agronomicas" element={<TareasAgronomicas />} />
                   <Route path="/opcion3" element={<Opcion3 />} />
                   <Route path="/opcion4" element={<Opcion4 />} />
@@ -42,6 +48,7 @@ const App = () => {
           />
         </Routes>
       </Router>
+    </NotificationProvider>
     </AuthProvider>
   );
 };

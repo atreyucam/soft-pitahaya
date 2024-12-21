@@ -1,7 +1,6 @@
-const PagoTrabajador = require('./PagoTrabajador');
+const Pago = require('./pago');
 const CostoGasto = require('./CostoGasto');
 const Usuario = require('./Usuario');
-const Trabajador = require('./Trabajador');
 const Rol = require('./Rol');
 const Lote = require('./Lote');
 const Actividad = require('./Actividad');
@@ -22,9 +21,6 @@ const Solicitud = require('./Solicitud');
 Rol.hasMany(Usuario, { foreignKey: 'rol_id' });
 Usuario.belongsTo(Rol, { foreignKey: 'rol_id' });
 
-Usuario.hasOne(Trabajador, { foreignKey: 'usuario_id' });
-Trabajador.belongsTo(Usuario, { foreignKey: 'usuario_id' });
-
 Lote.hasMany(Actividad, { foreignKey: 'lote_id' });
 Actividad.belongsTo(Lote, { foreignKey: 'lote_id' });
 
@@ -44,11 +40,11 @@ UsoInsumo.belongsTo(Actividad, { foreignKey: 'actividad_id' });
 Actividad.hasMany(CostoGasto, { foreignKey: 'actividad_id' });
 CostoGasto.belongsTo(Actividad, { foreignKey: 'actividad_id' });
 
-CostoGasto.hasOne(PagoTrabajador, { foreignKey: 'gasto_id' });
-PagoTrabajador.belongsTo(CostoGasto, { foreignKey: 'gasto_id' });
+CostoGasto.hasOne(Pago, { foreignKey: 'gasto_id' });
+Pago.belongsTo(CostoGasto, { foreignKey: 'gasto_id' });
 
-Trabajador.hasMany(PagoTrabajador, { foreignKey: 'trabajador_id' });
-PagoTrabajador.belongsTo(Trabajador, { foreignKey: 'trabajador_id' });
+Usuario.hasMany(Pago, { foreignKey: 'usuario_id' });
+Pago.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
 Comprador.hasMany(Venta, { foreignKey: 'comprador_id' });
 Venta.belongsTo(Comprador, { foreignKey: 'comprador_id' });
@@ -71,9 +67,6 @@ RegistroBPA.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 Lote.hasMany(Cosecha, { foreignKey: 'lote_id' });
 Cosecha.belongsTo(Lote, { foreignKey: 'lote_id' });
 
-// Relación con Trabajador
-Trabajador.hasMany(Cosecha, { foreignKey: 'trabajador_id' });
-Cosecha.belongsTo(Trabajador, { foreignKey: 'trabajador_id' });
 
 // Relación con Actividad
 Actividad.hasOne(Cosecha, { foreignKey: 'actividad_id' });
@@ -89,7 +82,7 @@ Solicitud.belongsTo(Inventario, { foreignKey: 'item_id' });
 
 
 
-module.exports = { Usuario, Trabajador, Rol, Lote, Actividad, TipoActividad,
-    Inventario, Insumo, UsoInsumo, CostoGasto, PagoTrabajador, Comprador, Venta, DetalleVenta,
+module.exports = { Usuario, Rol, Lote, Actividad, TipoActividad,
+    Inventario, Insumo, UsoInsumo, CostoGasto, Pago, Comprador, Venta, DetalleVenta,
     Mensaje, Notificacion, RegistroBPA, Cosecha, Solicitud
  };

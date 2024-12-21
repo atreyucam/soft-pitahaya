@@ -58,3 +58,5 @@ exports.clearResetToken = async (usuarioId) => {
         { where: { usuario_id: usuarioId } }
     );
 };
+
+
